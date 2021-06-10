@@ -1,26 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Trainning_Project.Model;
 
-namespace CityInfo.API
+namespace Trainig_Project
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        // read values from app settings.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+
             services.AddMvc().AddMvcOptions(o =>
             {
                 o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
-                
+                o.EnableEndpointRouting = false;
+
             });
 
             services.AddSwaggerGen(setupAction =>
@@ -29,29 +35,30 @@ namespace CityInfo.API
 
                 {
                     Title = "Trainingprojectapi",
-                    Version="1"
+                    Version = "1"
                 }
                     );
-                
+
 
             });
+            services.AddScoped<IGetDetailsRepository, GetDetailsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+           
             app.UseStatusCodePages();
             app.UseSwagger();
-            app.UseSwaggerUI(setupAction=> {
+            app.UseSwaggerUI(setupAction =>
+            {
                 setupAction.SwaggerEndpoint("/Swagger/TrainingProjectApiSpecification/Swagger.Json", "Trainingprojectapi");
             });
             app.UseMvc();
-        
         }
     }
 }

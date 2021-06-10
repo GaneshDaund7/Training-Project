@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Trainning_Project.Model;
 
 namespace Trainning_Project.Controller
@@ -11,11 +10,17 @@ namespace Trainning_Project.Controller
     [Route("api/Assets")]
     public class AssetController : ControllerBase
     {
-      
+        private readonly IGetDetailsRepository _getdto;
+
+        public AssetController(IGetDetailsRepository getdto)
+        {
+            _getdto = getdto ?? throw new ArgumentNullException(nameof(getdto));
+        }
+
         [HttpGet]
         public IActionResult GetAllAssets()
         {
-            var result = GetDetailsDto.ToGetAllDetails().Select(x => x.Asset_Name).Distinct();
+            var result = _getdto.ToGetAllDetails().Select(x => x.Asset_Name).Distinct();
             if (result == null)
                 return NotFound();
             return Ok(result);
@@ -26,7 +31,7 @@ namespace Trainning_Project.Controller
         {
 
 
-            var result = GetDetailsDto.ToGetAllDetails().Where(x => x.Machine_Name == machinename).Select(x => x.Asset_Name).ToList();
+            var result = _getdto.ToGetAllDetails().Where(x => x.Machine_Name == machinename).Select(x => x.Asset_Name).ToList();
             if (result.Count == 0)
                 return NotFound();
             return Ok(result);

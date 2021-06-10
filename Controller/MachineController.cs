@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Trainning_Project.Model;
 
 namespace Trainning_Project.Controller
@@ -11,11 +10,16 @@ namespace Trainning_Project.Controller
     [Route("api/Machines")]
     public class MachineController:ControllerBase
     {
-        string path = @"C:\Users\DjS\Desktop\end\CityInfo.API\Matrix.csv";
+        private readonly IGetDetailsRepository _getdto;
+
+        public MachineController(IGetDetailsRepository getdto)
+        {
+            _getdto = getdto ?? throw new ArgumentNullException(nameof(getdto));
+        }
         [HttpGet]
        public IActionResult GetAllMachines()
         {
-            var result = GetDetailsDto.ToGetAllDetails().Select(x => x.Machine_Name).Distinct();
+            var result = _getdto.ToGetAllDetails().Select(x => x.Machine_Name).Distinct();
             if (result == null)
                 return NotFound();
             return Ok(result);
@@ -25,7 +29,7 @@ namespace Trainning_Project.Controller
         public IActionResult GetMachineNameByAsset(string assetname)
         {
             assetname = " " + assetname;
-            var result = GetDetailsDto.ToGetAllDetails().Where(x => x.Asset_Name == assetname).Select(x => x.Machine_Name).ToList();
+            var result =_getdto.ToGetAllDetails().Where(x => x.Asset_Name == assetname).Select(x => x.Machine_Name).ToList();
             if (result.Count == 0)
                 return NotFound();
             return Ok(result);
