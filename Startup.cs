@@ -36,12 +36,10 @@ namespace Trainig_Project
                 {
                     Title = "Trainingprojectapi",
                     Version = "1"
-                }
-                    );
-
+                });
 
             });
-            services.AddScoped<IGetDetailsRepository, GetDetailsRepository>();
+            services.AddScoped<IMachineAssetRepository, MachineAssetRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

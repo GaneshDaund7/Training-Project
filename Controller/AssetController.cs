@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Trainning_Project.Model;
 
 namespace Trainning_Project.Controller
@@ -10,31 +11,33 @@ namespace Trainning_Project.Controller
     [Route("api/Assets")]
     public class AssetController : ControllerBase
     {
-        private readonly IGetDetailsRepository _getdto;
+        private readonly IMachineAssetRepository _getdto;
 
-        public AssetController(IGetDetailsRepository getdto)
+        public AssetController(IMachineAssetRepository getdto)
         {
             _getdto = getdto ?? throw new ArgumentNullException(nameof(getdto));
         }
 
         [HttpGet]
-        public IActionResult GetAllAssets()
+        public async Task<IActionResult> GetAllAssets()
         {
-            var result = _getdto.ToGetAllDetails().Select(x => x.Asset_Name).Distinct();
-            if (result == null)
+            var machineAsset = await _getdto.GetAllDetails();
+            var allAssets=machineAsset.Select(x => x.Asset_Name).Distinct().ToList();
+            
+            if (allAssets.Count == 0)
                 return NotFound();
-            return Ok(result);
+
+            return Ok(allAssets);
         }
 
         [HttpGet("{machinename}")]
-        public IActionResult GetAssetNameByMachine(string machinename)
+        public async  Task<IActionResult> GetAssetNameByMachine(string machinename)
         {
-
-
-            var result = _getdto.ToGetAllDetails().Where(x => x.Machine_Name == machinename).Select(x => x.Asset_Name).ToList();
-            if (result.Count == 0)
+            var machineAsset = await _getdto.GetAllDetails();
+            var requiredAsset= machineAsset.Where(x => x.Machine_Name == machinename).Select(x => x.Asset_Name).ToList();
+            if (requiredAsset.Count == 0)
                 return NotFound();
-            return Ok(result);
+            return Ok(requiredAsset);
 
         }
     }

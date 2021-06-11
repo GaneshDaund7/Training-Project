@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Trainig_Project
 {
+
     public class Program
     {
         public static void Main(string[] args)

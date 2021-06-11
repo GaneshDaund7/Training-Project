@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "5Kj3xAMn5M/DE7c+v/zQwMcAOy+LCcqQjO8O4K2VdCAMSGWSUxEYjS7xO+6LKDx5m97+fHsYHJwpbXiyHWMquw==",
+  "dgSpecHash": "03jGEpNSnvOdUaOK/Lf9/iifDW5IoOTv+A4l//OnacqLmSpeyNAhU8l8PRypGgMSkvChFdf85+FL2h8j/8Yj+w==",
   "success": true,
   "projectFilePath": "C:\\Users\\DjS\\source\\repos\\Trainig-Project\\Trainig-Project\\Trainnig-Project.api.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\DjS\\.nuget\\packages\\microsoft.aspnetcore.mvc.api.analyzers\\2.2.6\\microsoft.aspnetcore.mvc.api.analyzers.2.2.6.nupkg.sha512",
     "C:\\Users\\DjS\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\DjS\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\DjS\\.nuget\\packages\\swashbuckle.aspnetcore\\6.1.4\\swashbuckle.aspnetcore.6.1.4.nupkg.sha512",
