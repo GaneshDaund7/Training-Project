@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Trainnig-Project.api</name>
+    </assembly>
+    <members>
+        <member name="M:CityInfo.API.Controller.GetMachinesAssetsController.GetMachineName">
+            <summary>
+            Get all Machine names with All Assets and Series number.
+            </summary>
+            <returns>All data from file</returns>
+        </member>
+        <member name="T:CityInfo.API.Model.MachineAssetDto">
+            <summary>
+            A MachineAsset with MachineName , AssetName, SeriesNumber.
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Model.MachineAssetDto.Machine_Name">
+            <summary>
+            Machine Name
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Model.MachineAssetDto.Asset_Name">
+            <summary>
+            AssetName
+            </summary>
+        </member>
+        <member name="P:CityInfo.API.Model.MachineAssetDto.Series_No">
+            <summary>
+            Series number.
+            </summary>
+        </member>
+        <member name="M:Trainning_Project.Controller.AssetController.GetAllAssetsAnyc">
+            <summary>
+            Get All Asset names here.
+            </summary>
+            <returns>All Assets present in the file</returns>
+        </member>
+        <member name="M:Trainning_Project.Controller.AssetController.GetAssetNameByMachine(System.String)">
+            <summary>
+            Get Assets which given machine uses
+            </summary>
+            <param name="machinename"></param>
+            <returns>all Assets which given machine uses</returns>
+        </member>
+        <member name="F:Trainning_Project.Controller.GetMachineNameByLastestController._machineAssetRepository">
+            <summary>
+            Get Machine Names by Lastest Asset series.
+            </summary>
+        </member>
+        <member name="M:Trainning_Project.Controller.GetMachineNameByLastestController.GetMachineByLastedSeries">
+            <summary>
+            Get Lastest Series Machines Here
+            </summary>
+            <returns>All Machines which are using Lastest Asset Series</returns>
+        </member>
+        <member name="M:Trainning_Project.Controller.MachineController.GetAllMachines">
+            <summary>
+            Get all Machine Names here
+            </summary>
+            <returns>All machines which are present in file</returns>
+        </member>
+        <member name="M:Trainning_Project.Controller.MachineController.GetMachineNameByAsset(System.String)">
+            <summary>
+            Get all machines which are using given asset
+            </summary>
+            <param name="assetname"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
