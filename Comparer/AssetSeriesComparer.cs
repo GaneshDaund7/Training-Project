@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CityInfo.API
+namespace Trainig_Project.Comparer
 {
-    public class MachineAssetComparer:IEqualityComparer<MachineAssetDto>
+    public class AssetSeriesComparer : IEqualityComparer<MachineAssetDto>
     {
         public bool Equals(MachineAssetDto x, MachineAssetDto y)
         {
-            if (x.Asset_Name == y.Asset_Name && x.Machine_Name == y.Machine_Name && x.Series_No == y.Series_No)
+            if (x.Asset_Name == y.Asset_Name && x.Series_No == y.Series_No)
             {
                 return true;
             }
@@ -19,7 +19,7 @@ namespace CityInfo.API
 
         public int GetHashCode(MachineAssetDto obj)
         {
-            return (obj.Series_No + obj.Machine_Name + obj.Asset_Name).GetHashCode();
+            return (obj.Series_No  + obj.Asset_Name).GetHashCode();
         }
     }
 }

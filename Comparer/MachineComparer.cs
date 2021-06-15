@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace CityInfo.API
 {
-    public class MachineComparer:IEqualityComparer<MachineDto>
+    public class MachineComparer:IEqualityComparer<MachineAssetDto>
     {
-        public bool Equals(MachineDto x, MachineDto y)
+        public bool Equals(MachineAssetDto x, MachineAssetDto y)
         {
             if (x.Machine_Name == y.Machine_Name)
                 return true;
             return false;
 
         }
-        public int GetHashCode(MachineDto obj)
+        public int GetHashCode(MachineAssetDto obj)
         {
             return (obj.Machine_Name).GetHashCode();
         }

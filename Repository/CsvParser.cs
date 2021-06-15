@@ -3,12 +3,12 @@
 namespace Trainning_Project.Model
 {
     public class CsvParser
-    {
-        public static MachineDto ParseRow(string row)
+    {  
+        public static MachineAssetDto ParseRow(string row)
         {
             var column = row.Split(',');
 
-            return new MachineDto()
+            return new MachineAssetDto()
             {
                 Machine_Name = column[0],
                 Asset_Name = column[1],

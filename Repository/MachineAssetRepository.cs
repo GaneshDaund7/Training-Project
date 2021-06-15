@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Trainig_Project.Comparer;
 
 namespace Trainning_Project.Model
 {
+#pragma warning disable CS1591
     public class  MachineAssetRepository:IMachineAssetRepository
     {
+
         string path = @"C:\Users\DjS\Desktop\end\CityInfo.API\Matrix.csv";
 
-        public async  Task<List<MachineDto>> GetAllDetails()
+        public async  Task<List<MachineAssetDto>> GetMachineAssetDetails()
         {
             Task<string[]> taskToReadMachineAssetCombinations =  File.ReadAllLinesAsync(path);
             var machineAssetCombinations  = await taskToReadMachineAssetCombinations;
@@ -23,10 +26,12 @@ namespace Trainning_Project.Model
                 ToList();
         }
 
-        public List<string>GetMachineByLastedSeries()
+        public async Task<List<string>> GetMachineByLastedSeries()
         {
-           
-            var machinesWithLastestAssets = File.ReadAllLines(path).
+
+            var taskToReadMachineAssetCombinations = await File.ReadAllLinesAsync(path);
+
+            var machinesWithLastestAssets= taskToReadMachineAssetCombinations.
                 Where(row => row.Length > 0).
                 Select(CsvParser.ParseRow).
                 OrderByDescending(x => x.Series_No).
@@ -35,13 +40,19 @@ namespace Trainning_Project.Model
                 Select(g => g.First()).
                 ToList();
 
-            var allMachinesAssets= File.ReadLines(path).
+            var machinesWithOldesAssets = File.ReadLines(path).
                 Where(row => row.Length > 0).
                 Select(CsvParser.ParseRow).
+                Except(machinesWithLastestAssets, new MachineAssetComparer()).
                 ToList();
 
-            var machinesWithOldesAssets = allMachinesAssets.Except(machinesWithLastestAssets, new MachineAssetComparer()).ToList();
-            var lastestAsssetMachines = machinesWithLastestAssets.Except(machinesWithOldesAssets, new MachineComparer()).
+            var remainingLastestAsset = machinesWithOldesAssets.Intersect(machinesWithLastestAssets, new AssetSeriesComparer()).ToList();
+            machinesWithLastestAssets.AddRange(remainingLastestAsset);
+
+            var removingRemainingLastestAsssetFromOldestAsset = machinesWithOldesAssets.Except(remainingLastestAsset, new AssetSeriesComparer()).ToList();
+
+
+            var lastestAsssetMachines = machinesWithLastestAssets.Except(removingRemainingLastestAsssetFromOldestAsset, new MachineComparer()).
                                          Select(x => x.Machine_Name).ToList();
 
             return lastestAsssetMachines;

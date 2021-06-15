@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.IO;
+using System.Reflection;
 using Trainning_Project.Model;
 
 namespace Trainig_Project
@@ -22,7 +25,7 @@ namespace Trainig_Project
         {
             services.AddControllersWithViews();
 
-            services.AddMvc().AddMvcOptions(o =>
+            services.AddMvc(o =>
             {
                 o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
                 o.EnableEndpointRouting = false;
@@ -38,6 +41,9 @@ namespace Trainig_Project
                     Version = "1"
                 });
 
+                var xmlCommentFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentFile);
+                setupAction.IncludeXmlComments(xmlFullPath);
             });
             services.AddScoped<IMachineAssetRepository, MachineAssetRepository>();
         }
