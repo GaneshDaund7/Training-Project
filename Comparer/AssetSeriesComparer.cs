@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trainig_Project.Comparer
 {
+#pragma warning disable CS1591
     public class AssetSeriesComparer : IEqualityComparer<MachineAssetDto>
     {
         public bool Equals(MachineAssetDto x, MachineAssetDto y)

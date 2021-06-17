@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CityInfo.API
 {
+#pragma warning disable CS1591
     public class MachineComparer:IEqualityComparer<MachineAssetDto>
     {
         public bool Equals(MachineAssetDto x, MachineAssetDto y)

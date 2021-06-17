@@ -12,7 +12,34 @@ namespace Trainning_Project.Model
     public class  MachineAssetRepository:IMachineAssetRepository
     {
 
-        string path = @"C:\Users\DjS\Desktop\end\CityInfo.API\Matrix.csv";
+        string path = @"C:\Users\DjS\source\repos\Trainig-Project\Trainig-Project\Matrix.csv";
+
+        public async Task<List<string>> GetAllAssets()
+        {
+            var readMachineAssets = await File.ReadAllLinesAsync(path);
+            return readMachineAssets.Where(row => row.Length > 0).
+                Select(CsvParser.ParseRow).
+                Select(x => x.Asset_Name).
+                Distinct().ToList();
+        }
+
+        public async Task<List<string>> GetAllMachines()
+        {
+            var readMachinesAssets = await File.ReadAllLinesAsync(path);
+            return readMachinesAssets.Where(row => row.Length > 0).
+                   Select(CsvParser.ParseRow).
+                   Select(x => x.Machine_Name).Distinct().ToList();
+        }
+
+        public async Task<List<string>> GetAssetNamesByMachine(string machinename)
+        {
+            var readMachinesAssets = await File.ReadAllLinesAsync(path);
+            return readMachinesAssets.Where(row => row.Length > 0).
+                Select(CsvParser.ParseRow).
+                Where(x => x.Machine_Name == machinename).
+                Select(x => x.Asset_Name).ToList();
+            
+        }
 
         public async  Task<List<MachineAssetDto>> GetMachineAssetDetails()
         {
@@ -52,10 +79,24 @@ namespace Trainning_Project.Model
             var removingRemainingLastestAsssetFromOldestAsset = machinesWithOldesAssets.Except(remainingLastestAsset, new AssetSeriesComparer()).ToList();
 
 
-            var lastestAsssetMachines = machinesWithLastestAssets.Except(removingRemainingLastestAsssetFromOldestAsset, new MachineComparer()).
+            var lastestAsssetMachines = machinesWithLastestAssets.
+                                        Except(removingRemainingLastestAsssetFromOldestAsset, new MachineComparer()).
                                          Select(x => x.Machine_Name).ToList();
 
             return lastestAsssetMachines;
+
+        }
+
+        public async Task<List<string>> GetMachinesNameByAsset(string assetname)
+        {
+            assetname = " " + assetname;
+            var readMachinesAssets = await File.ReadAllLinesAsync(path);
+            return readMachinesAssets.
+                   Where(row => row.Length > 0).
+                   Select(CsvParser.ParseRow).
+                   Where(x => x.Asset_Name == assetname).
+                   Select(x => x.Machine_Name).ToList();
+
 
         }
     }
