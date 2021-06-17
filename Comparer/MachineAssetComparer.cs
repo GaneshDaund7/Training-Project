@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CityInfo.API
 {
+#pragma warning disable CS1591
     public class MachineAssetComparer:IEqualityComparer<MachineAssetDto>
     {
         public bool Equals(MachineAssetDto x, MachineAssetDto y)

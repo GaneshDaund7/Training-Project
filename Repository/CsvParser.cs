@@ -2,6 +2,7 @@
 
 namespace Trainning_Project.Model
 {
+#pragma warning disable CS1591
     public class CsvParser
     {  
         public static MachineAssetDto ParseRow(string row)
